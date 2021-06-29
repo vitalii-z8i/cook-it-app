@@ -1,0 +1,15 @@
+version: '3.5'
+services:
+
+  main:
+    build:
+      context: .
+      args:
+        - NODE_ENV=development
+    command: ['/bin/sh', '-c', 'npm i ; npm run serve']
+    # command: ['/bin/sh', '-c', 'tail -f ./Dockerfile']
+    restart: always
+    volumes:
+      - .:/home/node/app
+    ports:
+      - 8000:8080
