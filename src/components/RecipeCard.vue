@@ -77,7 +77,7 @@ export default {
 
 <style lang="scss" scoped>
   .recipe-card {
-    padding: 0 0.7rem 2rem 0.7rem;
+    padding: 2rem 0.7rem 5rem 0.7rem;
     overflow-y: scroll;
     background: #ffffff;
     text-align: left;
@@ -127,7 +127,7 @@ export default {
       width: 100vw;
       height: 0;
       z-index: 20;
-      position: absolute;
+      position: fixed;
       bottom: 0;
       left: 0;
       background: #4e4e4eb5;

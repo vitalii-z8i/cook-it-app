@@ -1,19 +1,17 @@
 <template>
   <section>
     <div class="container">
-      <RecipeCard v-if="dish.name" :dish="dish" @closed="unsetRecipe" />
-      <Randomizer v-else @selected="showRecipe" />
+      <Randomizer @selected="showRecipe" />
     </div>
   </section>
 </template>
 
 <script>
 import Randomizer from '@/components/Randomizer'
-import RecipeCard from '@/components/RecipeCard'
 
 export default {
   name: 'Home',
-  components: { Randomizer, RecipeCard },
+  components: { Randomizer },
   data () {
     return {
       dish: {
@@ -28,10 +26,8 @@ export default {
   methods: {
     showRecipe (dish) {
       this.dish = dish
+      this.$router.push({ name: 'Recipe', params: { id: dish.id } })
     },
-    unsetRecipe () {
-      this.dish = { name: '' }
-    }
   }
 }
 </script>

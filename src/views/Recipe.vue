@@ -1,0 +1,36 @@
+<template>
+  <RecipeCard v-if="dish?.id" :dish="dish" @closed="unsetRecipe" />
+</template>
+
+<script>
+import RecipeCard from '@/components/RecipeCard'
+import recipes from '@/assets/recipes'
+import emitter from '@/emitter'
+
+export default {
+  components: { RecipeCard },
+  data () {
+    return {
+      dish: {
+        id: null,
+        name: '',
+      },
+    }
+  },
+  mounted () {
+    try {
+      emitter.$emit('loading', true)
+      this.dish = recipes.find(r => r.id === Number(this.$route.params.id))
+    } catch (err) {
+      console.error(err)
+    } finally {
+      emitter.$emit('loading', false)
+    }
+  },
+  methods: {
+    unsetRecipe () {
+      this.$router.push({ name: 'Home' })
+    }
+  }
+}
+</script>
