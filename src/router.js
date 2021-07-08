@@ -8,14 +8,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "home" */ "./views/Index.vue")
   },
   {
-    path: '/:id',
-    name: 'Recipe',
-    component: () => import(/* webpackChunkName: "home" */ "./views/Recipe.vue")
-  },
-  {
     path: '/my-list',
     name: 'MyList',
-    component: () => import(/* webpackChunkName: "home" */ "./views/MyList.vue")
+    component: () => import(/* webpackChunkName: "my-list" */ "./views/MyList.vue")
+  },
+  {
+    path: '/:id',
+    name: 'Recipe',
+    component: () => import(/* webpackChunkName: "recipe" */ "./views/Recipe.vue")
   },
 ]
 

@@ -1,6 +1,7 @@
 <template>
   <Header />
   <Loader :isLoading="isLoading" />
+  <Search :showSearch="showSearch" />
   <router-view></router-view>
   <Footer />
 </template>
@@ -9,20 +10,29 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Loader from '@/components/Loader'
+import Search from '@/components/Search'
 import emitter from '@/emitter'
 
 export default {
   name: 'App',
-  components: { Header, Footer, Loader },
+  components: { Header, Footer, Loader, Search },
   data () {
     return {
-      isLoading: false
+      isLoading: false,
+      showSearch: false,
     }
   },
   mounted () {
     emitter.$on('loading', (isLoading) => {
       this.isLoading = isLoading
     })
+    emitter.$on('showSearch', (showSearch) => {
+      this.showSearch = showSearch
+    })
+  },
+  beforeUnmount () {
+    emitter.$off('loading')
+    emitter.$off('showSearch')
   }
 }
 </script>

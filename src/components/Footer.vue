@@ -2,8 +2,13 @@
   <footer>
     <ul>
       <li>
+        <a href="#" @click.capture="openSearch" class="router-link-active">
+          <font-awesome-icon icon="search" size="2x" />
+        </a>
+      </li>
+      <li>
         <router-link :to="{ name: 'Home' }">
-          <font-awesome-icon icon="compass" size="2x" />
+          <font-awesome-icon icon="compass" size="3x" />
         </router-link>
       </li>
 
@@ -16,10 +21,24 @@
   </footer>
 </template>
 
+<script>
+import emitter from '@/emitter'
+
+export default {
+  methods: {
+    openSearch () {
+      emitter.$emit('showSearch', true)
+    }
+  }
+}
+</script>
+
 <style lang="scss" scoped>
   footer {
     width: 100%;
     position: fixed;
+    display: flex;
+    align-items: center;
     height: 65px;
     bottom: 0;
     background: #ffffff;
@@ -33,8 +52,10 @@
       justify-content: space-around;
       align-items: center;
       li {
-        padding-top: 1rem;
-        .router-link-exact-active {
+        a:-webkit-any-link {
+          color: rgb(85, 26, 139);
+        }
+        a.router-link-exact-active {
           color: #1d00ff;
         }
       }

@@ -138,12 +138,18 @@ export default {
         width: 100%;
         background: #ffffff;
         margin: 0;
-        padding: 2rem 0;
+        padding: 1rem 0;
         list-style: none;
         max-width: 100%;
 
         li {
           padding: 1rem 2rem;
+          &:first-child {
+            padding-top: 0.5rem;
+          }
+          &:last-child {
+            padding-bottom: 0.5rem;
+          }
           border-bottom: 1px solid #4c4c4c24;
           &:last-child {
             border-bottom: none;
