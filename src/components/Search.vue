@@ -90,6 +90,7 @@ export default {
         text-align: left;
         margin: 0.5rem 0;
         .result {
+          cursor: pointer;
           font-size: 1.2em;
           padding: 1rem 0.5rem;
           &:not(:last-child) {
