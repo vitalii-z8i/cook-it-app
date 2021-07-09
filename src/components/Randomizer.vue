@@ -35,17 +35,20 @@ export default {
 
 <style lang="scss" scoped>
   .randomizer {
+    position: absolute;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
     height: 100%;
-
+    min-height: 568px;
     button {
       width: 13rem;
       height: 13rem;
       background: #ffffff;
       border: none;
-      margin-bottom: auto;
-      margin-top: auto;
+      margin: auto;
 
       border-radius: 50%;
       box-shadow: 0 0 12px -4px #3f66fe;

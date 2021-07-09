@@ -1,8 +1,6 @@
 <template>
   <section>
-    <div class="container">
-      <Randomizer @selected="showRecipe" />
-    </div>
+    <Randomizer @selected="showRecipe" />
   </section>
 </template>
 
@@ -31,9 +29,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-h1 {
-  margin-top: 4rem;
-}
-</style>

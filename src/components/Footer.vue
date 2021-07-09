@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer v-show="showBar">
     <ul>
       <li>
         <a href="#" @click.capture="openSearch" class="router-link-active">
@@ -25,6 +25,19 @@
 import emitter from '@/emitter'
 
 export default {
+  data () {
+    return {
+      showBar: true
+    }
+  },
+  mounted () {
+    emitter.$on('showSearch', (value) => {
+      this.showBar = !value
+    })
+  },
+  beforeUnmount () {
+    emitter.$off('showSearch')
+  },
   methods: {
     openSearch () {
       emitter.$emit('showSearch', true)

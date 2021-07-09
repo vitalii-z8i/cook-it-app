@@ -41,7 +41,7 @@ export default {
 html, body {
   margin: 0;
   width: 100vw;
-  height: 100vh;
+  min-height: 568px;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -49,20 +49,15 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  min-height: 568px;
+  position: relative;
   section {
     padding-top: 50px;
     height: calc(100vh - 105px);
+    min-height: calc(568px - 105px);
     overflow-y: hidden;
-    .container {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      max-width: 100%;
-      height: 100%;
-    }
   }
   svg:focus, svg:active {
     outline: none;

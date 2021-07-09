@@ -1,0 +1,23 @@
+{
+  "name": "cookIT.app | Випадкові рецепти",
+  "short_name": "cookIT.app",
+  "description": "Не знаєте що приготувати на вечерю, сніданок, чи обід. cookIT.app вирішить цю проблему за вас",
+  "categories": [
+    "cooking",
+    "recipes",
+    "productivity"
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "natural",
+  "lang": "uk",
+  "start_url": "/?application=true",
+  "icons": [
+    {
+      "src": "./icon.png",
+      "sizes": "515x512",
+      "type": "image/png"
+    }
+  ]
+}

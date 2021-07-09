@@ -78,8 +78,9 @@ export default {
 <style lang="scss" scoped>
   .search-bg {
     position: fixed;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+    min-height: 568px;
     z-index: 10;
     background: #4e4e4eb5;
     display: flex;
