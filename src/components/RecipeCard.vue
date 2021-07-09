@@ -150,9 +150,8 @@ export default {
           &:last-child {
             padding-bottom: 0.5rem;
           }
-          border-bottom: 1px solid #4c4c4c24;
-          &:last-child {
-            border-bottom: none;
+          &:not(:last-child) {
+            border-bottom: 2px solid #3f66fe14;
           }
           button {
             color: #000000;

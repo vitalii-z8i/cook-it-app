@@ -1,12 +1,15 @@
 <template>
   <div class="search-bg" v-show="showSearch" @click="hideSearch">
     <div class="search-wrap" @click.stop>
-      <input v-model="searchTerm" @keyup="handleSearch" ref="searchField" placeholder="Введіть щось..."/>
+      <input v-model="searchTerm" @input="handleSearch" ref="searchField" placeholder="Введіть щось..."/>
       <div class="results">
         <div v-for="r in results" :key="r.id" @click="hideSearch(); $router.push({ name: 'Recipe', params: { id: r.id } })" class="result">
           {{ r.name }}
         </div>
       </div>
+    </div>
+    <div class="loading" v-if="isLoading">
+      <div class="spinner"></div>
     </div>
   </div>
 </template>
@@ -34,6 +37,7 @@ export default {
   },
   data () {
     return {
+      isLoading: false,
       timeOutVal: null,
       searchTerm: '',
       results: []
@@ -41,18 +45,27 @@ export default {
   },
   methods: {
     handleSearch () {
+      this.isLoading = true
       clearTimeout(this.timeOutVal);
       this.timeOutVal = setTimeout(this.search, 600)
     },
     search () {
-      if (!this.searchTerm) {
+      try {
+        if (!this.searchTerm) {
+          this.results = []
+          return
+        }
+        this.results = recipes.filter(r => r.name.replace(/'|,|./, '').includes(this.searchTerm.replace(/'|,|./, ''))).splice(0, 5)
+      } catch (err) {
+        console.err(err)
         this.results = []
-        return
+      } finally {
+        this.isLoading = false
       }
-      this.results = recipes.filter(r => r.name.replace(/'|,|./, '').includes(this.searchTerm.replace(/'|,|./, ''))).splice(0, 5)
     },
     hideSearch () {
       emitter.$emit('showSearch', false)
+      this.isLoading = false
       this.searchTerm = ''
       this.results = []
     },
@@ -77,7 +90,11 @@ export default {
         text-align: left;
         margin: 0.5rem 0;
         .result {
+          font-size: 1.2em;
           padding: 1rem 0.5rem;
+          &:not(:last-child) {
+            border-bottom: 2px solid #3f66fe14;
+          }
         }
       }
       input {
@@ -95,6 +112,55 @@ export default {
           outline: none;
         }
       }
+    }
+    .loading {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin-top: 1rem;
+      padding: 0.6rem 0;
+
+      .spinner,
+      .spinner:after {
+        border-radius: 50%;
+        width: 1.5em;
+        height: 1.5em;
+      }
+      .spinner {
+        margin: 0.3rem 1rem;
+        position: relative;
+        text-indent: -9999em;
+        border-top: 0.4em solid #3f66fe15;
+        border-right: 0.4em solid #3f66fe15;
+        border-bottom: 0.4em solid #3f66fe15;
+        border-left: 0.4em solid #3f66fe99;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation: load8 1.1s infinite linear;
+        animation: load8 1.1s infinite linear;
+      }
+    }
+  }
+
+  @-webkit-keyframes load8 {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes load8 {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
     }
   }
 </style>
