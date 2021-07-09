@@ -1,7 +1,7 @@
 <template>
   <div class="search-bg" v-show="showSearch" @click="hideSearch">
     <div class="search-wrap" @click.stop>
-      <input v-model="searchTerm" @input="handleSearch" ref="searchField" placeholder="Введіть щось..."/>
+      <input @input="e => searchTerm = e.target.value" ref="searchField" placeholder="Введіть щось..."/>
       <div class="results">
         <div v-for="r in results" :key="r.id" @click="hideSearch(); $router.push({ name: 'Recipe', params: { id: r.id } })" class="result">
           {{ r.name }}
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-
 import recipes from '@/assets/recipes'
 import emitter from '@/emitter'
 
@@ -33,6 +32,9 @@ export default {
           this.$refs.searchField.focus()
         }, 100)
       }
+    },
+    searchTerm () {
+      this.handleSearch()
     }
   },
   data () {
