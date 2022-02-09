@@ -60,7 +60,11 @@ export default {
   },
   methods: {
     saveRecipe (mealTime) {
-      localStorage[mealTime] = JSON.stringify(this.dish)
+      let saved = JSON.parse(localStorage[mealTime] || '[]')
+      if (!Array.isArray(saved)) {
+        saved = [saved]
+      }
+      localStorage[mealTime] = JSON.stringify([...saved, this.dish])
       this.showOptions = false
       this.$emit('closed')
     },

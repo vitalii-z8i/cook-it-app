@@ -4,65 +4,65 @@
     <div v-if="!breakfast && !lunch && !dinner" class="no-items">
       <p>Ви ще не зберегли жодного рецепту</p>
     </div>
-    <div v-if="breakfast" class="recipe-card">
+    <div v-for="meal in breakfast" :key="`br-${meal.id}`" class="recipe-card">
       <div class="card-head">
         <h2>
           <small>Сніданок:</small>
-          {{ breakfast.name }}
+          {{ meal.name }}
         </h2>
-        <button @click="deleteItem('breakfast')">
+        <button @click="deleteItem('breakfast', meal.id)">
           <font-awesome-icon :icon="['fas', 'times']" size="2x" />
         </button>
       </div>
       <div class="card-body">
-          <img :src="fetchImage(breakfast)"/>
+          <img :src="fetchImage(meal)"/>
         <div class="body-text">
           <ul>
-            <li v-for="ing in breakfast.recipe" :key="ing">{{ ing }}</li>
+            <li v-for="ing in meal.recipe" :key="ing">{{ ing }}</li>
           </ul>
-          <p>{{ breakfast.text }}</p>
+          <p>{{ meal.text }}</p>
         </div>
       </div>
     </div>
 
-      <div v-if="lunch" class="recipe-card">
-        <div class="card-head">
-          <h2>
-            <small>Обід:</small>
-            {{ lunch.name }}
-          </h2>
-          <button @click="deleteItem('lunch')">
-            <font-awesome-icon :icon="['fas', 'times']" size="2x" />
-          </button>
-        </div>
-        <div class="card-body">
-          <img :src="fetchImage(lunch)"/>
-          <div class="body-text">
-            <ul>
-              <li v-for="ing in lunch.recipe" :key="ing">{{ ing }}</li>
-            </ul>
-            <p>{{ lunch.text }}</p>
-          </div>
-        </div>
-      </div>
-
-    <div v-if="dinner" class="recipe-card">
+    <div v-for="meal in lunch" :key="`br-${meal.id}`" class="recipe-card">
       <div class="card-head">
         <h2>
-          <small>Вечеря:</small>
-          {{ dinner.name }}
+          <small>Обід:</small>
+          {{ meal.name }}
         </h2>
-        <button @click="deleteItem('dinner')">
+        <button @click="deleteItem('lunch', meal.id)">
           <font-awesome-icon :icon="['fas', 'times']" size="2x" />
         </button>
       </div>
       <div class="card-body">
-          <img :src="fetchImage(dinner)"/>
+          <img :src="fetchImage(meal)"/>
         <div class="body-text">
           <ul>
-            <li v-for="ing in dinner.recipe" :key="ing">{{ ing }}</li>
+            <li v-for="ing in meal.recipe" :key="ing">{{ ing }}</li>
           </ul>
-          <p>{{ dinner.text }}</p>
+          <p>{{ meal.text }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div v-for="meal in dinner" :key="`br-${meal.id}`" class="recipe-card">
+      <div class="card-head">
+        <h2>
+          <small>Вечеря:</small>
+          {{ meal.name }}
+        </h2>
+        <button @click="deleteItem('dinner', meal.id)">
+          <font-awesome-icon :icon="['fas', 'times']" size="2x" />
+        </button>
+      </div>
+      <div class="card-body">
+          <img :src="fetchImage(meal)"/>
+        <div class="body-text">
+          <ul>
+            <li v-for="ing in meal.recipe" :key="ing">{{ ing }}</li>
+          </ul>
+          <p>{{ meal.text }}</p>
         </div>
       </div>
     </div>
@@ -73,26 +73,37 @@
 export default {
   data () {
     return {
-      breakfast: undefined,
-      lunch: undefined,
-      dinner: undefined,
+      breakfast: [],
+      lunch: [],
+      dinner: [],
     }
   },
   mounted () {
-    if (localStorage.breakfast) {
-      this.breakfast = JSON.parse(localStorage.breakfast)
-    }
-    if (localStorage.lunch) {
-      this.lunch = JSON.parse(localStorage.lunch)
-    }
-    if (localStorage.dinner) {
-      this.dinner = JSON.parse(localStorage.dinner)
+    try {
+      if (localStorage.breakfast) {
+        const breakfast = JSON.parse(localStorage.breakfast) || []
+        this.breakfast = Array.isArray(breakfast) ? breakfast : [breakfast]
+      }
+      if (localStorage.lunch) {
+        const lunch = JSON.parse(localStorage.lunch) || []
+        this.lunch = Array.isArray(lunch) ? lunch : [lunch]
+      }
+      if (localStorage.dinner) {
+        const dinner = JSON.parse(localStorage.dinner) || []
+        this.dinner = Array.isArray(dinner) ? dinner : [dinner]
+      }
+    } catch (err) {
+      console.error(err)
+      localStorage.breakfast = []
+      localStorage.lunch = []
+      localStorage.dinner = []
     }
   },
   methods: {
-    deleteItem (mealTime) {
-      Object.assign(this, { [mealTime]: undefined })
-      delete localStorage[mealTime]
+    deleteItem (mealTime, id) {
+      const newMealset = this[mealTime].filter(m => m.id !== id)
+      Object.assign(this, { [mealTime]: newMealset })
+      localStorage[mealTime] = JSON.stringify(newMealset)
     },
     fetchImage (dish) {
       try {
